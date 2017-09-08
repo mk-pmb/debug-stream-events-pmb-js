@@ -31,11 +31,10 @@ test.log.verify = function () {
     }, t * 1000);
   }
 
-  send(0.2, 'Hello ');
-  send(0.4, 'World!\n');
-  send(0.6, 'World!\n');
-  send(0.8, null);
-  setTimeout(test.log.verify, 1000);
+  send(0.3, 'Hello ');
+  send(0.5, 'World!\n');
+  send(0.7, null);
+  setTimeout(test.log.verify, 2000);
 
   test.log.expect = [
     [ '|->', 'resume', [] ],
@@ -44,9 +43,9 @@ test.log.verify = function () {
     [ '|->', 'data', [ 'Hello ' ] ],
     [ 'send:', 'World!\n' ],
     [ '|->', 'data', [ 'World!\n' ] ],
-    [ 'send:', 'World!\n' ],
-    [ '|->', 'data', [ 'World!\n' ] ],
     [ 'send:', null ],
+    [ '->|', 'finish', [] ],
+    [ '|->', 'readable', [] ],
     [ '|->', 'end', [] ],
     [ '|->', 'close', [ false ] ],
     [ '->|', 'close', [ false ] ],

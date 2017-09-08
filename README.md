@@ -36,7 +36,7 @@ from [test.usage.js](test.usage.js):
 
 <!--#include file="test.usage.js" start="  //#u" stop="  //#r"
   outdent="  " code="javascript" -->
-<!--#verbatim lncnt="36" -->
+<!--#verbatim lncnt="35" -->
 ```javascript
 var posixPipe = require('posix-pipe'), pair = posixPipe(),
   rd = pair[0], wr = pair[1],
@@ -52,11 +52,10 @@ function send(t, x) {
   }, t * 1000);
 }
 
-send(0.2, 'Hello ');
-send(0.4, 'World!\n');
-send(0.6, 'World!\n');
-send(0.8, null);
-setTimeout(test.log.verify, 1000);
+send(0.3, 'Hello ');
+send(0.5, 'World!\n');
+send(0.7, null);
+setTimeout(test.log.verify, 2000);
 
 test.log.expect = [
   [ '|->', 'resume', [] ],
@@ -65,9 +64,9 @@ test.log.expect = [
   [ '|->', 'data', [ 'Hello ' ] ],
   [ 'send:', 'World!\n' ],
   [ '|->', 'data', [ 'World!\n' ] ],
-  [ 'send:', 'World!\n' ],
-  [ '|->', 'data', [ 'World!\n' ] ],
   [ 'send:', null ],
+  [ '->|', 'finish', [] ],
+  [ '|->', 'readable', [] ],
   [ '|->', 'end', [] ],
   [ '|->', 'close', [ false ] ],
   [ '->|', 'close', [ false ] ],
@@ -87,15 +86,17 @@ The last time this readme was updated, `observe.evNames` had:
 
 <!--#include file="log.js" start="  //#.evNames" stop="  //#"
   outdent="  " code="javascript" -->
-<!--#verbatim lncnt="9" -->
+<!--#verbatim lncnt="11" -->
 ```javascript
-'error', 'end', 'close',
+'error', 'end', 'close', 'finish',
 'open',   // e.g. file streams
 'connect', 'connected',       // net.Socket + common mistake
 'disconnect', 'disconnected',
 'start', 'stop', 'ready',     // additional generic names
 'drain', 'data',
 'pause', 'resume', 'continue',
+'readable', 'writable', 'writeable',
+'pipe', 'unpipe', 'cork', 'uncork',
 ```
 <!--/include-->
 

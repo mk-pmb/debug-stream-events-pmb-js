@@ -37,13 +37,15 @@ each(function (w) {
 
 EX.evNames = [
   //#.evNames
-  'error', 'end', 'close',
+  'error', 'end', 'close', 'finish',
   'open',   // e.g. file streams
   'connect', 'connected',       // net.Socket + common mistake
   'disconnect', 'disconnected',
   'start', 'stop', 'ready',     // additional generic names
   'drain', 'data',
   'pause', 'resume', 'continue',
+  'readable', 'writable', 'writeable',
+  'pipe', 'unpipe', 'cork', 'uncork',
   //#
 ];
 
