@@ -4,6 +4,7 @@
 
 var EX, usc = '_', arSlc = Array.prototype.slice, isBuf = Buffer.isBuffer;
 
+function fail(why) { throw new Error(why); }
 function ifDef(x) { return (x !== undefined); }
 function lc(s) { return String(s || '').toLowerCase(); }
 function each(f, a) { return a.forEach(f); }
@@ -17,16 +18,17 @@ function jsonify(x) {
 }
 
 
-EX = function observe(s, name, log) {
+EX = function observe(subj, name, log) {
+  if (!subj) { fail('Expected EventEmitter but got a false-y value'); }
   if (!log) { log = 'warn'; }
   if (typeof log === 'string') { log = console[log].bind(console); }
   var meta = {};
   function addMeta(k, v) { if (ifDef(v)) { meta[k] = v; } }
-  EX.sockProps.forEach(function (p) { addMeta(p, s[p]); });
-  addMeta('handleFd', orf(s[usc + 'handle']).fd);
+  EX.sockProps.forEach(function (p) { addMeta(p, subj[p]); });
+  addMeta('handleFd', orf(subj[usc + 'handle']).fd);
   if (!name) { name = jsonify(meta); }
   function logEvt(v) { log(name, v, arSlc.call(arguments, 1).map(buf2str)); }
-  EX.evNames.forEach(function (v) { s.on(v, logEvt.bind(null, v)); });
+  EX.evNames.forEach(function (v) { subj.on(v, logEvt.bind(null, v)); });
 };
 
 

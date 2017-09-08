@@ -1,5 +1,5 @@
 { "name": "log-stream-events-pmb",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Install logging handlers on a variety of stream-related events.",
   "keywords": [ "stream", "event", "debug", "log" ],
 
