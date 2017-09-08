@@ -36,7 +36,7 @@ from [test.usage.js](test.usage.js):
 
 <!--#include file="test.usage.js" start="  //#u" stop="  //#r"
   outdent="  " code="javascript" -->
-<!--#verbatim lncnt="34" -->
+<!--#verbatim lncnt="36" -->
 ```javascript
 var posixPipe = require('posix-pipe'), pair = posixPipe(),
   rd = pair[0], wr = pair[1],
@@ -59,6 +59,8 @@ send(0.8, null);
 setTimeout(test.log.verify, 1000);
 
 test.log.expect = [
+  [ '|->', 'resume', [] ],
+  [ '->|', 'resume', [] ],
   [ 'send:', 'Hello ' ],
   [ '|->', 'data', [ 'Hello ' ] ],
   [ 'send:', 'World!\n' ],

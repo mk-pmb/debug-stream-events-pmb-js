@@ -38,6 +38,8 @@ test.log.verify = function () {
   setTimeout(test.log.verify, 1000);
 
   test.log.expect = [
+    [ '|->', 'resume', [] ],
+    [ '->|', 'resume', [] ],
     [ 'send:', 'Hello ' ],
     [ '|->', 'data', [ 'Hello ' ] ],
     [ 'send:', 'World!\n' ],
