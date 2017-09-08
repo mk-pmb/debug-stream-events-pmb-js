@@ -34,7 +34,7 @@ test.log.verify = function () {
   send(0.3, 'Hello ');
   send(0.5, 'World!\n');
   send(0.7, null);
-  setTimeout(test.log.verify, 2000);
+  setTimeout(test.log.verify, 1000);
 
   test.log.expect = [
     [ '|->', 'resume', [] ],
