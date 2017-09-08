@@ -85,21 +85,54 @@ Event names list
 The last time this readme was updated, `observe.evNames` had:
 
 <!--#include file="log.js" start="  //#.evNames" stop="  //#"
-  outdent="  " code="javascript" -->
-<!--#verbatim lncnt="11" -->
-```javascript
-'error', 'end', 'close', 'finish',
-'open',   // e.g. file streams
-'connect', 'connected',       // net.Socket + common mistake
-'disconnect', 'disconnected',
-'start', 'stop', 'ready',     // additional generic names
-'drain', 'data',
-'pause', 'resume', 'continue',
-'readable', 'writable', 'writeable',
-'pipe', 'unpipe', 'cork', 'uncork',
-```
+  cut-head="  '" cut-tail="'," -->
+<!--#verbatim lncnt="45" -->
+abort
+aborted
+beforeExit
+change
+close
+connect
+connected
+connection
+continue
+cork
+data
+disconnect
+disconnected
+drain
+end
+error
+exit
+finish
+line
+listen
+listening
+lookup
+message
+open
+pause
+pipe
+readable
+ready
+request
+reset
+resize
+response
+resume
+secureConnect
+socket
+start
+stop
+sync
+timeout
+uncork
+unpipe
+upgrade
+warning
+writable
+writeable
 <!--/include-->
-
 
 
 Known issues
