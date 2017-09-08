@@ -2,14 +2,14 @@
 /* -*- tab-width: 2 -*- */
 'use strict';
 
-var EX, usc = '_', arSlc = Array.prototype.slice, isBuf = Buffer.isBuffer;
+var EX, usc = '_', arSlc = Array.prototype.slice, isBuf = Buffer.isBuffer,
+  univeil = require('univeil');
 
 function fail(why) { throw new Error(why); }
 function ifDef(x) { return (x !== undefined); }
 function lc(s) { return String(s || '').toLowerCase(); }
 function each(f, a) { return a.forEach(f); }
 function pushTo(a, b) { return a.push.apply(a, b); }
-function buf2str(x) { return (isBuf(x) ? x.toString('UTF-8') : x); }
 function orf(x) { return (x || false); }
 
 function jsonify(x) {
@@ -27,7 +27,10 @@ EX = function observe(subj, name, log) {
   EX.sockProps.forEach(function (p) { addMeta(p, subj[p]); });
   addMeta('handleFd', orf(subj[usc + 'handle']).fd);
   if (!name) { name = jsonify(meta); }
-  function logEvt(v) { log(name, v, arSlc.call(arguments, 1).map(buf2str)); }
+  function logEvt(v) {
+    var a = arSlc.call(arguments, 1);
+    log.apply(null, [name, v].concat(a.map(EX.buf2str)));
+  }
   EX.evNames.forEach(function (v) { subj.on(v, logEvt.bind(null, v)); });
 };
 
@@ -36,6 +39,7 @@ EX.sockProps = [ 'name', 'path', 'fd' ];
 each(function (w) {
   pushTo(EX.sockProps, [ lc(w), 'local' + w, 'remote' + w ]);
 }, [ 'Address', 'Port', 'Family' ]);
+
 
 EX.evNames = [
   //#.evNames
@@ -86,6 +90,25 @@ EX.evNames = [
   'writeable',
   //#
 ];
+
+
+EX.buf2str = function (x) {
+  if (!isBuf(x)) { return x; }
+  var l = x.length, s, n;
+  x = x.slice(0, 256);
+  s = x.toString('UTF-8');
+  n = (orf(s.match(/\uFFFD/g)).length || 0) / x.length;
+  if (n > 0.2) { s = x.toString('binary'); }
+  s = 'buf[' + l + '] ' + univeil(JSON.stringify(s));
+  if (x.length < l) { s += '…'; }
+  return s;
+};
+
+
+
+
+
+
 
 
 

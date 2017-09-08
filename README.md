@@ -58,18 +58,18 @@ send(0.7, null);
 setTimeout(test.log.verify, 1000);
 
 test.log.expect = [
-  [ '|->', 'resume', [] ],
-  [ '->|', 'resume', [] ],
+  [ '|->', 'resume' ],
+  [ '->|', 'resume' ],
   [ 'send:', 'Hello ' ],
-  [ '|->', 'data', [ 'Hello ' ] ],
+  [ '|->', 'data', 'buf[6] "Hello "' ],
   [ 'send:', 'World!\n' ],
-  [ '|->', 'data', [ 'World!\n' ] ],
+  [ '|->', 'data', 'buf[7] "World!\\n"' ],
   [ 'send:', null ],
-  [ '->|', 'finish', [] ],
-  [ '|->', 'readable', [] ],
-  [ '|->', 'end', [] ],
-  [ '|->', 'close', [ false ] ],
-  [ '->|', 'close', [ false ] ],
+  [ '->|', 'finish' ],
+  [ '|->', 'readable' ],
+  [ '|->', 'end' ],
+  [ '|->', 'close', false ],
+  [ '->|', 'close', false ],
 ];
 ```
 <!--/include-->
